@@ -76,7 +76,7 @@ function showNextTest() {
     const queryString = getUserTotalScore();
     let pathName = window.location.pathname.split("/");
     pathName.pop();
-    pathName.join("/");
+    pathName = pathName.join("/");
     const resultUrl = `${pathName}/result.html?${queryString}`;
     window.location.replace(resultUrl);
   }
