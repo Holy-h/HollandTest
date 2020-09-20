@@ -74,7 +74,8 @@ function showNextTest() {
     init();
   } else {
     const queryString = getUserTotalScore();
-    window.location.href(`result.html?${queryString}`);
+    const resultUrl = `${window.location.pathname}/result.html?${queryString}`;
+    window.location.replace(resultUrl);
   }
 }
 
