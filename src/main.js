@@ -2,6 +2,7 @@ import { tests } from "./test.js";
 
 const questionEl = document.querySelector(".question");
 const answersEl = document.querySelector(".answers");
+const codeEl = document.querySelector(".current-code");
 
 const userAnswerList = [];
 let testNumber = 0;
@@ -11,21 +12,42 @@ const test = {
 
 window.addEventListener("load", init);
 
-// answersEl.addEventListener("click", onAnswerClick);
+function init() {
+  showQuestion();
+  showCode();
+}
+
+function showCode() {
+  codeEl.innerText = test.current.code;
+}
+
+function showQuestion() {
+  let textIndex = 0;
+  let typingText = "";
+  questionEl.innerHTML = "";
+  const currentQuestion = test.current.question;
+  const typing = setInterval(() => {
+    typingText += currentQuestion[textIndex];
+    questionEl.innerText = typingText;
+    textIndex++;
+    if (textIndex === currentQuestion.length) {
+      clearInterval(typing);
+      showAnswers();
+    }
+  }, 100);
+}
 
 function showAnswers() {
   answersEl.addEventListener("click", onAnswerClick);
-
   if (testNumber !== 0) {
     return;
   }
-
+  let answerIndex = 0;
   const hideEl = document.querySelectorAll(".answers .hide");
-  let i = 0;
   const showing = setInterval(() => {
-    hideEl[i].classList.remove("hide");
-    i++;
-    if (i == hideEl.length) {
+    hideEl[answerIndex].classList.remove("hide");
+    answerIndex++;
+    if (answerIndex == hideEl.length) {
       clearInterval(showing);
     }
   }, 300);
@@ -45,34 +67,42 @@ function onAnswerClick(event) {
   }, 1000);
 }
 
-function init() {
-  let i = 0;
-  let typingText = "";
-  questionEl.innerHTML = "";
-
-  const question = test.current.question;
-  const typing = setInterval(() => {
-    typingText += question[i];
-    questionEl.innerText = typingText;
-    i++;
-    if (i === question.length) {
-      clearInterval(typing);
-      showAnswers();
-    }
-  }, 100);
-}
-
 function showNextTest() {
   testNumber++;
   test.current = tests[testNumber];
   if (test.current) {
     init();
   } else {
-    window.location.href = "/index.html";
+    const queryString = getUserTotalScore();
+    window.location.replace(`/result.html?${queryString}`);
   }
-  console.log(userAnswerList);
 }
 
 function submitAnswer(value) {
   userAnswerList.push(value);
+}
+
+function getUserTotalScore() {
+  if (userAnswerList.length === 0) {
+    return;
+  }
+  const queryList = [];
+  const userTotalScore = {
+    R: 0,
+    E: 0,
+    I: 0,
+    A: 0,
+    C: 0,
+    S: 0,
+  };
+  tests.map((test, index) => {
+    userTotalScore[test.code] += userAnswerList[index];
+  });
+  const scorePairList = Object.entries(userTotalScore);
+  for (let scorePair of scorePairList) {
+    queryList.push(`${scorePair[0]}=${scorePair[1]}`);
+  }
+  const queryString = queryList.join("&");
+  console.log(queryString);
+  return queryString;
 }

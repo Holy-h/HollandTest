@@ -24,3 +24,48 @@ export const tests = [
     question: "다른 사람을 도와주는 것을 좋아한다.",
   },
 ];
+
+export const results = [
+  {
+    code: "R",
+    name: "현실형",
+    enName: "Realistic",
+    summary: "솔직하고 원칙적인 전략가",
+    desc: "현실형은...",
+  },
+  {
+    code: "S",
+    name: "사회형",
+    enName: "Social",
+    summary: "외향적이며 재치있는 동반자",
+    desc: "사회형은...",
+  },
+  {
+    code: "E",
+    name: "진취형",
+    enName: "Enterprising",
+    summary: "외향적이고 자신감 있는 지도자",
+    desc: "진취형은...",
+  },
+  {
+    code: "C",
+    name: "관습형",
+    enName: "Conventional",
+    summary: "빈틈없고 효율적인 능력자",
+    desc: "관습형은...",
+  },
+  {
+    code: "I",
+    name: "탐구형",
+    enName: "Investigative",
+    summary: "지적이고 독립적인 탐구자",
+    desc: "탐구형은...",
+  },
+  {
+    code: "A",
+    name: "예술형",
+    enName: "Artistic",
+    summary: "자유분방하고 독창적인 예술가",
+    desc: "예술형은...",
+  },
+];
