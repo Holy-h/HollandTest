@@ -74,7 +74,10 @@ function showNextTest() {
     init();
   } else {
     const queryString = getUserTotalScore();
-    const resultUrl = `${window.location.pathname}/result.html?${queryString}`;
+    let pathName = window.location.pathname.split("/");
+    pathName.pop();
+    pathName.join("/");
+    const resultUrl = `${pathName}/result.html?${queryString}`;
     window.location.replace(resultUrl);
   }
 }
