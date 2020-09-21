@@ -61,13 +61,13 @@ function showLoading() {
 function showResult() {
   resultEl.innerHTML = `
     <div class="result__main">
-      <div class="code">CODE: ${user.mainType.enName}</div>
+      <div class="code">MAIN CODE: ${user.mainType.enName}</div>
       <div class="name">${user.mainType.name}</div>
       <div class="summary">${user.mainType.summary}</div>
       <div class="desc">${user.mainType.desc}</div>
     </div>
     <div class="result__sub">
-      <div class="code">CODE: ${user.subType.enName}</div>
+      <div class="code">SUB CODE: ${user.subType.enName}</div>
       <div class="name">${user.subType.name}</div>
       <div class="summary">${user.subType.summary}</div>
       <div class="desc">${user.subType.desc}</div>

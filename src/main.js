@@ -75,9 +75,12 @@ function showNextTest() {
   } else {
     const queryString = getUserTotalScore();
     let pathName = window.location.pathname.split("/");
-    pathName.pop();
+    pathName.splice(-1, 1);
     pathName = pathName.join("/");
-    const resultUrl = `${pathName}/result.html?${queryString}`;
+    const resultUrl =
+      window.location.hostname === "127.0.0.1"
+        ? `${pathName}/result.html?${queryString}`
+        : `${pathName}/result?${queryString}`;
     window.location.replace(resultUrl);
   }
 }
