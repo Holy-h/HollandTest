@@ -1,4 +1,4 @@
-export const tests = [
+export const defaultTests = [
   {
     code: "R",
     question: "말로 표현하는 것보다 직접 행동 하는 것이 좋다.",

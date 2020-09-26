@@ -1,8 +1,11 @@
 import { results } from "./test.js";
 
-const containerEl = document.querySelector(".container");
+const URL = window.location.href;
+
 const loadingEl = document.querySelector(".loading");
 const resultEl = document.querySelector(".result");
+const btnWrapperEl = document.querySelector(".btn-wrapper");
+const shareBtnEl = document.querySelector(".button-share");
 
 const params = new URLSearchParams(window.location.search.slice(1));
 const user = {
@@ -14,7 +17,6 @@ window.addEventListener("load", () => {
   showLoading();
   let maxScore = 0;
   for (let pair of params.entries()) {
-    console.group(pair);
     pair[1] = +pair[1];
     if (+pair[1] > maxScore) {
       // 한 단계 아래로
@@ -26,36 +28,44 @@ window.addEventListener("load", () => {
       user.subType.code = pair[0];
       user.subType.score = pair[1];
     }
-    console.groupEnd();
   }
 
   for (let result of results) {
-    console.group(result);
     if (result.code === user.mainType.code) {
       user.mainType = { ...user.mainType, ...result };
     } else if (result.code === user.subType.code) {
       user.subType = { ...user.subType, ...result };
     }
-    console.groupEnd();
   }
-  console.log(user);
 });
+
+shareBtnEl.addEventListener("click", () => {
+  shareBtnEl.innerText = "복사 완료";
+  shareBtnEl.classList.add("shared");
+
+  setTimeout(() => {
+    shareBtnEl.innerText = "내 결과 공유하기";
+    shareBtnEl.classList.remove("shared");
+  }, 2000);
+});
+
+shareBtnEl.setAttribute("data-clipboard-text", URL);
 
 function showLoading() {
   let innerText = "내 유형은...";
-  let textIndex = 0;
+  let textIndex = 5;
   const typing = setInterval(() => {
     loadingEl.innerText = innerText.slice(0, textIndex);
     textIndex++;
     if (textIndex > innerText.length) {
-      textIndex = 0;
+      textIndex = 5;
     }
-  }, 300);
+  }, 400);
   setTimeout(() => {
     clearInterval(typing);
     loadingEl.remove();
     showResult();
-  }, 300);
+  }, 2000);
 }
 
 function showResult() {
@@ -74,4 +84,5 @@ function showResult() {
     </div>
   `;
   resultEl.classList.remove("hide");
+  btnWrapperEl.classList.remove("hide");
 }
